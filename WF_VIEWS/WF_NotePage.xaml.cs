@@ -11,7 +11,7 @@ public partial class WF_NotePage : ContentPage
 
 
         string appDataPath = FileSystem.AppDataDirectory;
-        string randomFileName = $"{Path.GetRandomFileName()}.WANDERLEYFLORES_WF.txt";
+        string randomFileName = $"{Path.GetRandomFileName()}.notes.txt";
 
         LoadNote(Path.Combine(appDataPath, randomFileName));
     }
