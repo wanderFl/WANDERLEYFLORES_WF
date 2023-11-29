@@ -48,4 +48,20 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Images\arro.png" />
+	  <None Remove="Resources\Images\arroba.png" />
+	  <None Remove="Resources\Images\letra.png" />
+	  <None Remove="Resources\Images\letrita.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="WF_VIEWS\WF_AbousPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="WF_VIEWS\WF_NotePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
