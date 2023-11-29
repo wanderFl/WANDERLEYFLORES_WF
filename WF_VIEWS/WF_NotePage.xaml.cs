@@ -9,8 +9,11 @@ public partial class WF_NotePage : ContentPage
     {
         InitializeComponent();
 
-        if (File.Exists(_fileName))
-            WFTextEditor.Text = File.ReadAllText(_fileName);
+
+        string appDataPath = FileSystem.AppDataDirectory;
+        string randomFileName = $"{Path.GetRandomFileName()}.WANDERLEYFLORES_WF.txt";
+
+        LoadNote(Path.Combine(appDataPath, randomFileName));
     }
 
     private void SaveButton_Clicked(object sender, EventArgs e)
@@ -26,5 +29,18 @@ public partial class WF_NotePage : ContentPage
             File.Delete(_fileName);
 
         WFTextEditor.Text = string.Empty;
+    }
+    private void LoadNote(string fileName)
+    {
+        WF_Models.WF_Note noteModel = new WF_Models.WF_Note();
+        noteModel.Filename = fileName;
+
+        if (File.Exists(fileName))
+        {
+            noteModel.Date = File.GetCreationTime(fileName);
+            noteModel.Text = File.ReadAllText(fileName);
+        }
+
+        BindingContext = noteModel;
     }
 }
