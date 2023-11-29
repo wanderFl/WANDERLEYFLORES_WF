@@ -1,9 +1,9 @@
 namespace WANDERLEYFLORES_WF.Views;
 
-
+[QueryProperty(nameof(ItemId), nameof(ItemId))]
 public partial class WF_NotePage : ContentPage
 {
-    string _fileName = Path.Combine(FileSystem.AppDataDirectory, "Wanderley Flores");
+    string _fileName = Path.Combine(FileSystem.AppDataDirectory, "Note.txt");
 
     public WF_NotePage()
     {
@@ -16,19 +16,25 @@ public partial class WF_NotePage : ContentPage
         LoadNote(Path.Combine(appDataPath, randomFileName));
     }
 
-    private void SaveButton_Clicked(object sender, EventArgs e)
+    private async void SaveButton_Clicked(object sender, EventArgs e)
     {
         // Save the file.
-        File.WriteAllText(_fileName, WFTextEditor.Text);
+        if (BindingContext is WF_Models.WF_Note note)
+            File.WriteAllText(note.Filename, TextEditor.Text);
+
+        await Shell.Current.GoToAsync("..");
     }
 
-    private void DeleteButton_Clicked(object sender, EventArgs e)
+    private async void DeleteButton_Clicked(object sender, EventArgs e)
     {
-        // Delete the file.
-        if (File.Exists(_fileName))
-            File.Delete(_fileName);
+        if (BindingContext is WF_Models.WF_Note note)
+        {
+            // Delete the file.
+            if (File.Exists(note.Filename))
+                File.Delete(note.Filename);
+        }
 
-        WFTextEditor.Text = string.Empty;
+        await Shell.Current.GoToAsync("..");
     }
     private void LoadNote(string fileName)
     {
@@ -42,5 +48,10 @@ public partial class WF_NotePage : ContentPage
         }
 
         BindingContext = noteModel;
+    }
+
+    public string ItemId
+    {
+        set { LoadNote(value); }
     }
 }
